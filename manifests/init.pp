@@ -40,11 +40,17 @@ define mounts (
           '6': {
             ensure_resource('package', 'rpcbind', {'ensure' => 'present'})
             ensure_resource('service', 'rpcbind', {'ensure' => 'running'})
+            ensure_resource('service', 'nfslock', {'ensure' => 'running'})
+            ensure_resource('service', 'rpcidmapd', {'ensure' => 'running'})
             Package['rpcbind'] -> Service['rpcbind']
+            Service['nfslock'] -> Service['rpcidmapd']
           }
           '5': {
             ensure_resource('package', 'portmap', {'ensure' => 'present'})
             ensure_resource('service', 'portmap', {'ensure' => 'running'})
+            ensure_resource('service', 'nfslock', {'ensure' => 'running'})
+            ensure_resource('service', 'rpcidmapd', {'ensure' => 'running'})
+            Service['nfslock'] -> Service['rpcidmapd']
             Package['portmap'] -> Service['portmap']
           }
           default: {
