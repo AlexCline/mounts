@@ -21,8 +21,8 @@ define mounts (
     err('The type parameter is required.')
   }
 
-  case $::operatingsystem {
-    redhat, centos, amazon: {
+  case $::osfamily {
+    RedHat: {
 
       fstab { "fstab entry for ${source} to ${dest} as ${type}":
         ensure => $ensure,
